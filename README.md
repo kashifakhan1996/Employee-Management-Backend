@@ -1,98 +1,186 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Employee Management Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A modular, scalable NestJS application to manage employee data, using **GraphQL** as the API layer and **PostgreSQL** with **TypeORM** for persistent storage.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 🚀 Tech Stack
 
-## Description
+- [NestJS](https://nestjs.com/) – Progressive Node.js framework
+- [GraphQL](https://graphql.org/) – API query language with Apollo Server
+- [TypeORM](https://typeorm.io/) – ORM for TypeScript and Node.js
+- [PostgreSQL](https://www.postgresql.org/) – Open-source SQL database
+- [TypeScript](https://www.typescriptlang.org/) – Static typing for JavaScript
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+---
 
-## Project setup
+## 📦 Project Structure
 
-```bash
-$ npm install
 ```
 
-## Compile and run the project
+src/
+├── app.module.ts
+├── config/
+│   ├── database.config.ts
+│   └── graphql.config.ts
+└── employee/
+├── dto/
+│   ├── employee-filter.input.ts
+│   └── employee.type.ts
+├── entities/
+│   └── employee.entity.ts
+├── employee.module.ts
+├── employee.resolver.ts
+└── employee.service.ts
 
-```bash
-# development
-$ npm run start
+````
 
-# watch mode
-$ npm run start:dev
+---
 
-# production mode
-$ npm run start:prod
+## 📄 Features
+
+- Create & retrieve employees with filtering and pagination
+- GraphQL API with auto-generated schema
+- Modular structure with feature modules
+- Environment-agnostic DB setup (PostgreSQL)
+- Easily extendable for additional features (e.g., mutations, auth)
+
+---
+
+## ⚙️ Prerequisites
+
+- Node.js v18+
+- npm or yarn
+- PostgreSQL running locally or on a server
+
+---
+
+## 🛠️ Installation
+
+``` bash
+# Clone the repository
+git clone https://github.com/your-username/employee-management-backend.git
+cd employee-management-backend
+
+# Install dependencies
+npm install
+
+# Configure PostgreSQL (optional)
+# Make sure a DB named `employees_db` exists with correct credentials
+createdb -U postgres employees_db
+````
+
+---
+
+## 🔧 Configuration
+
+Update the DB credentials in `src/config/database.config.ts`:
+
+```ts
+export const databaseConfig: TypeOrmModuleOptions = {
+  type: 'postgres',
+  host: 'localhost',
+  port: 5432,
+  username: 'postgres',
+  password: 'your_password_here',
+  database: 'employees_db',
+  ...
+};
 ```
 
-## Run tests
+---
+
+## ▶️ Running the App
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+# Start the server in development mode
+npm run start:dev
 ```
 
-## Deployment
+Nest will run at:
+📍 `http://localhost:5000`
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+---
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+## 🔍 GraphQL Playground
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+Open [http://localhost:3000/graphql](http://localhost:3000/graphql) to test queries.
+
+### Sample Queries:
+
+#### 🔹 Get Employees (with filters & pagination)
+
+```graphql
+query {
+  employees(filters: { department: "Engineering" }, page: 1, limit: 5) {
+    id
+    name
+    email
+    title
+  }
+}
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+#### 🔹 Get Employee by ID
 
-## Resources
+```graphql
+query {
+  employee(id: 1) {
+    id
+    name
+    department
+    status
+  }
+}
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+---
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+## 🧱 Entities
 
-## Support
+### `Employee`
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+| Field      | Type   | Description       |
+| ---------- | ------ | ----------------- |
+| id         | number | Primary Key       |
+| name       | string | Employee name     |
+| title      | string | Job title         |
+| department | string | Department name   |
+| location   | string | Office location   |
+| email      | string | Work email        |
+| phone      | string | Contact number    |
+| status     | string | Active/Inactive   |
+| dateHired  | string | Date of hire      |
+| manager    | string | Reporting manager |
+| notes      | string | Optional notes    |
 
-## Stay in touch
+---
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## 🧪 Testing (Coming Soon)
 
-## License
+This project does not yet include unit or integration tests. Suggestions for implementation:
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+* Use `@nestjs/testing` for service & resolver tests
+* Use an in-memory PostgreSQL instance (e.g. `pg-mem`) for DB-related unit tests
+
+---
+
+## 📤 Deployment
+
+1. Set `synchronize: false` in production.
+2. Use environment variables with `@nestjs/config`.
+3. Use a process manager like `PM2` or containerize using Docker.
+
+---
+
+## 📚 Future Enhancements
+
+* Add `CreateEmployee` & `UpdateEmployee` mutations
+* Add user authentication (JWT)
+* Add audit logs and soft deletes
+* Deploy GraphQL schema with Apollo Studio
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
+

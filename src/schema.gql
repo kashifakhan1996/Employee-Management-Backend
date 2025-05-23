@@ -1,0 +1,28 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type EmployeeType {
+  id: Int!
+  name: String!
+  title: String!
+  department: String!
+  location: String!
+  email: String!
+  phone: String!
+  status: String!
+  dateHired: String!
+  manager: String!
+  notes: String!
+}
+
+type Query {
+  employees(filters: EmployeeFilterInput, page: Int, limit: Int): [EmployeeType!]!
+  employee(id: Int!): EmployeeType!
+}
+
+input EmployeeFilterInput {
+  name: String
+  department: String
+  status: String
+}
